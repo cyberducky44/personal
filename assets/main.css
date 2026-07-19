@@ -1,12 +1,14 @@
 body {
   background-color: #111;
   color: #eee;
-  font-family: "B612 Mono", monospace;
+  font-family: monospace;
+  font-weight: 400;
   text-align: left;
   padding: 20px;
   margin: 5vh 10vh 10vh 10vh;
   line-height: 1.5;
   max-width: 800px;
+  text-transform: lowercase;
 }
 
 a {
