@@ -4,30 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>emily: my media server</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/main.css">
 </head>
 <body>
-    <p>emily: my media server</p>
-    <p><a href="../">back</a> - 2026 06 20</p>
-    <div style="padding-top: 1rem;"></div>
-    <p>I've run a media server since the COVID lockdowns so I can watch legally acquired movies and shows without needing to rely on Netflix or Disney+. With the relatively low cost, before AI took all the storage, it seems worth it to avoid the ad-riddled plans that everyone has now.</p>
-    <p>Most of this is based on the work by Alex at KTZ Systems and their work on <a href="https://perfectmediaserver.com/" target="_blank">Perfect Media Server</a>, but with some QoL improvements such as Grafana monitoring and whatnot.</p>
-    <div style="padding-top: 1rem;"></div>
-    <p>--</p>
-    <p>the hardware</p>
-    <p>Emily is a pulled-together group of parts that I had lying around from old PC builds that were otherwise gathering dust and not being used (that said, they could have been sold, but ya know :q)</p>
-    <p>Motherboard: Asrock B450 Steel Legend</p>
-    <p>CPU: AMD Ryzen 7 3700X</p>
-    <p>RAM: 32GB DDDR4 (Mixed speeds, I know it's bad for Ryzen, but this isn't doing anything intensive)</p>
-    <p>GPU: Nvidia RTX 3070</p>
-    <p>Storage: 4x 4TB Seagate Barracuda 5400rpm, 1x 1TB WD Blue 7200rpm & 1x 512GB WD Blue SN570</p>
-    <p>PSU: Corsair RM750x</p>
-    <p>Case: Some no name brand with enough space for all the parts</p>
-    <p>OS: Proxmox VE</p>
-    <img src="../../assets/content/media-server/fastfetch.png" style="width: 100%; max-width: 600px;" alt="fast fetch of the above" loading="lazy"/>
-    <div style="padding-top: 1rem;"></div>
-    <p>--</p>
-    <p>the software</p>
-    <p>Everything from <a href="https://perfectmediaserver.com/" target="_blank">Perfect Media Server</a> has been set up on Emily (SnapRAID, mergerfs, Docker, etc.), but these are the bits that I added.</p>
+    <main class="sign">
+        <p>emily: my media server</p>
+        <p><a href="../">back</a> - 2026 06 20</p>
+        <div style="padding-top: 1rem;"></div>
+        <p>I've run a media server since the COVID lockdowns so I can watch legally acquired movies and shows without needing to rely on Netflix or Disney+. With the relatively low cost, before AI took all the storage, it seems worth it to avoid the ad-riddled plans that everyone has now.</p>
+        <p>Most of this is based on the work by Alex at KTZ Systems and their work on <a href="https://perfectmediaserver.com/" target="_blank">Perfect Media Server</a>, but with some QoL improvements such as Grafana monitoring and whatnot.</p>
+        <div style="padding-top: 1rem;"></div>
+        <p>--</p>
+        <p>the hardware</p>
+        <p>Emily is a pulled-together group of parts that I had lying around from old PC builds that were otherwise gathering dust and not being used (that said, they could have been sold, but ya know :q)</p>
+        <p>Motherboard: Asrock B450 Steel Legend</p>
+        <p>CPU: AMD Ryzen 7 3700X</p>
+        <p>RAM: 32GB DDDR4 (Mixed speeds, I know it's bad for Ryzen, but this isn't doing anything intensive)</p>
+        <p>GPU: Nvidia RTX 3070</p>
+        <p>Storage: 4x 4TB Seagate Barracuda 5400rpm, 1x 1TB WD Blue 7200rpm & 1x 512GB WD Blue SN570</p>
+        <p>PSU: Corsair RM750x</p>
+        <p>Case: Some no name brand with enough space for all the parts</p>
+        <p>OS: Proxmox VE</p>
+        <img src="../../assets/content/media-server/fastfetch.png" style="width: 100%; max-width: 600px;" alt="fast fetch of the above" loading="lazy"/>
+        <div style="padding-top: 1rem;"></div>
+        <p>--</p>
+        <p>the software</p>
+        <p>Everything from <a href="https://perfectmediaserver.com/" target="_blank">Perfect Media Server</a> has been set up on Emily (SnapRAID, mergerfs, Docker, etc.), but these are the bits that I added.</p>
+    </main>
+    <script type="module" src="../../assets/world.js"></script>
 </body>
 </html>

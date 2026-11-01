@@ -1,34 +1,133 @@
+/* --plank/--post come from world.js */
 body {
-  background-color: #111;
-  color: #eee;
-  font-family: monospace;
+  margin: 0;
+  padding: 8vh 4vw 24vh;
+  min-height: 100vh;
+  box-sizing: border-box;
+  color: #fff3d6;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
   font-weight: 400;
+  line-height: 1.3;
   text-align: left;
-  padding: 20px;
-  margin: 5vh 10vh 10vh 10vh;
-  line-height: 1.5;
-  max-width: 800px;
   text-transform: lowercase;
-}
-
-@media (max-width: 600px) {
-  body {
-    max-width: 100%;
-    margin: 5vh 5vw 10vh 5vw;
-  }
+  /* sunset fallback for when webgl is off */
+  background: linear-gradient(#141a3d 0%, #5a3358 40%, #e0804a 72%, #1d1a2e 100%) fixed #1d1a2e;
 }
 
 a {
-  color: #87ceeb;
+  color: #9ff3ff;
   text-decoration: none;
+  text-shadow: 2px 2px 0 #0b1d24, 0 0 10px rgba(110, 230, 255, 0.6);
 }
 
 a:hover {
   text-decoration: underline;
 }
 
+/* the sign everything is written on */
+.sign {
+  position: relative;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px 48px 36px;
+  background: var(--plank, none) 0 0 / 128px 128px, #4a301b;
+  image-rendering: pixelated;
+  border: 8px solid #22150a;
+  box-shadow:
+    inset 0 0 0 4px #6b4628,
+    inset 0 0 70px rgba(0, 0, 0, 0.5),
+    0 40px 80px rgba(0, 0, 0, 0.6),
+    -18px -10px 60px rgba(255, 140, 70, 0.18);
+  /* glow ink */
+  text-shadow: 2px 2px 0 #1a0f07, 0 0 10px rgba(255, 190, 110, 0.45);
+  transition: opacity 0.35s, transform 0.35s;
+  animation: sign-in 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s backwards;
+}
+
+/* low sun washing over the board from the left */
+.sign::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 165, 90, 0.26), rgba(255, 120, 80, 0.05) 45%, rgba(30, 15, 50, 0.3));
+}
+
+.sign::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 64px;
+  height: 24vh;
+  margin-top: 8px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, rgba(255, 150, 80, 0.2), transparent 40%, rgba(0, 0, 0, 0.45)), var(--post, none) 0 0 / 64px 64px, #3b2614;
+  border: 4px solid #1c1108;
+  border-top: 0;
+}
+
+.sign > * {
+  position: relative;
+}
+
+/* small print at the bottom of a sign */
+.sign-note {
+  margin-top: 2rem;
+  font-size: 0.8em;
+  opacity: 0.75;
+}
+
+.sign img {
+  image-rendering: auto;
+  border: 4px solid #1a0f07;
+  box-shadow: 0 0 0 2px #6b4628, 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes sign-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) translateY(70px) scale(0.8) rotateX(10deg);
+    filter: blur(6px);
+  }
+}
+
+.mc-peek .sign {
+  opacity: 0;
+  transform: translateY(24px) scale(0.94);
+  pointer-events: none;
+}
+
+.mc-peek body {
+  user-select: none;
+}
+
+.mc-hover body {
+  cursor: pointer;
+}
+
+.mc-play body {
+  cursor: crosshair;
+}
+
+.mc-grab body {
+  cursor: grabbing;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 4vh 12px 20vh;
+    font-size: 20px;
+  }
+
+  .sign {
+    padding: 20px 18px 24px;
+  }
+}
+
 .bleh {
-  color: #aaa;
+  color: #ffd9b0;
   z-index: -1;
   position: absolute;
   left: 0;
@@ -37,10 +136,8 @@ a:hover {
   animation: bleh-slide var(--bleh-speed, 4s) linear infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .bleh {
-    animation: none;
-  }
+.mc-peek .bleh {
+  display: none;
 }
 
 @keyframes bleh-slide {
@@ -51,4 +148,200 @@ a:hover {
   100% {
     transform: translateX(100vw) translateY(var(--bleh-translateY, -50%));
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bleh,
+  .sign {
+    animation: none;
+  }
+}
+
+/* world.js */
+#world {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.mc-tip {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 12px 4px;
+  color: #fff3d6;
+  font-size: 0.8em;
+  text-shadow: 2px 2px 0 #000;
+  background: rgba(16, 10, 8, 0.8);
+  border: 2px solid #000;
+  box-shadow: inset 0 0 0 2px #3a3a3a;
+  white-space: nowrap;
+  transition: opacity 0.35s;
+}
+
+/* minecraft style options: a slider with its label drawn over the track, and a text box */
+.mc-options {
+  position: fixed;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  gap: 8px;
+  height: 40px;
+  font-size: 0.85em;
+}
+
+.mc-play:not(.mc-walk) .mc-options {
+  display: flex;
+}
+
+.mc-slider {
+  position: relative;
+  width: 400px;
+}
+
+.mc-slider input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #000;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.mc-slider input::-webkit-slider-runnable-track {
+  height: 100%;
+  background: #6f6f6f;
+  box-shadow: inset 2px 2px 0 #4a4a4a, inset -2px -2px 0 #8a8a8a;
+}
+
+.mc-slider input::-moz-range-track {
+  height: 100%;
+  background: #6f6f6f;
+  box-shadow: inset 2px 2px 0 #4a4a4a, inset -2px -2px 0 #8a8a8a;
+}
+
+.mc-slider input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 36px;
+  background: #a8a8a8;
+  border: 2px solid #000;
+  box-shadow: inset 2px 2px 0 #dcdcdc, inset -2px -2px 0 #5c5c5c;
+}
+
+.mc-slider input::-moz-range-thumb {
+  width: 12px;
+  height: 32px;
+  border-radius: 0;
+  background: #a8a8a8;
+  border: 2px solid #000;
+  box-shadow: inset 2px 2px 0 #dcdcdc, inset -2px -2px 0 #5c5c5c;
+}
+
+.mc-slider input:hover::-webkit-slider-thumb {
+  background: #b8c0ee;
+}
+
+.mc-slider input:focus-visible,
+.mc-field:focus-visible {
+  outline: 2px solid #fff;
+}
+
+.mc-slider span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-shadow: 2px 2px 0 #3f3f3f;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* the chat-box style text field */
+.mc-field {
+  width: 120px;
+  box-sizing: border-box;
+  padding: 0 8px;
+  font: inherit;
+  color: #fff;
+  text-align: center;
+  background: #000;
+  border: 2px solid #a0a0a0;
+  -moz-appearance: textfield;
+}
+
+.mc-field::-webkit-inner-spin-button,
+.mc-field::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.mc-play .mc-tip {
+  bottom: 76px;
+}
+
+/* hotbar and crosshair for walking around */
+.mc-hotbar {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  padding: 2px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 2px solid #000;
+  box-shadow: inset 0 0 0 2px #8b8b8b;
+}
+
+.mc-play .mc-hotbar {
+  display: flex;
+}
+
+.mc-slot {
+  width: 52px;
+  height: 52px;
+  padding: 8px;
+  background: rgba(70, 70, 70, 0.6);
+  border: 2px solid #5a5a5a;
+  cursor: pointer;
+}
+
+.mc-slot canvas {
+  display: block;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+.mc-slot.on {
+  border-color: #fff;
+  box-shadow: 0 0 0 2px #000, inset 0 0 0 2px #000;
+}
+
+.mc-cross {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  display: none;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  background:
+    linear-gradient(#fff, #fff) center / 2px 100% no-repeat,
+    linear-gradient(#fff, #fff) center / 100% 2px no-repeat;
+}
+
+.mc-walk .mc-cross {
+  display: block;
 }
